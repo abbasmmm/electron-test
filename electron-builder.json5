@@ -39,5 +39,6 @@
       "AppImage"
     ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
-  }
+  },
+  "electronDist": "C:\\Users\\Abbas\\Downloads\\electron-v30.3.1-win32-x64"
 }
