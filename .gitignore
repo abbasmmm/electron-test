@@ -25,3 +25,7 @@ release
 *.sln
 *.sw?
 .vs
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

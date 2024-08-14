@@ -3,14 +3,14 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/electron-vite.animate.svg'
 import './App.css'
 import { Button } from '@mui/material'
-import Dashboard from './dashboard/Dashboard'
+import { Actions } from '../electron/Actions'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      {/* <div>
+      <div>
         <a href="https://electron-vite.github.io" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -23,14 +23,22 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-       
+
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
 
-      <Button variant="contained">Hello world</Button> */}
-      <Dashboard/>
+      <Button variant="contained" onClick={async () => {
+        window.ipcRenderer.send(Actions.SendMessage, "this is a message");
+        let val = await window.ipcRenderer.invoke(Actions.SendMessage, "this is a message");
+        console.log(val);
+      }}>Hello world</Button>
+
+      <Button onClick={()=>{
+        window.ipcRenderer.invoke(Actions.LaunchBrowser)
+      }}>Launch Browser</Button>
+      {/* <Dashboard/> */}
     </>
   )
 }
