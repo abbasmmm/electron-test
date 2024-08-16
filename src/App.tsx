@@ -4,6 +4,7 @@ import viteLogo from '/electron-vite.animate.svg'
 import './App.css'
 import { Button } from '@mui/material'
 import { Actions } from '../electron/Actions'
+import Dashboard from './dashboard/Dashboard'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -36,8 +37,21 @@ function App() {
       }}>Hello world</Button>
 
       <Button onClick={()=>{
-        window.ipcRenderer.invoke(Actions.LaunchBrowser)
+        window.ipcRenderer.invoke(Actions.LaunchBrowser, 'http://google.com')
       }}>Launch Browser</Button>
+      <Button onClick={()=>{
+        window.ipcRenderer.invoke(Actions.LaunchBrowser, 'http://instagram.com')
+      }}>Insta Browser</Button>
+
+<Button onClick={ async ()=>{
+        await window.ipcRenderer.invoke(Actions.LaunchBrowser, 'https://www.saucedemo.com/')
+        await window.ipcRenderer.invoke(Actions.Fill, '[data-test="username"]', 'standard_user')
+        await window.ipcRenderer.invoke(Actions.Fill, '[data-test="password"]', 'secret_sauce')
+        // await window.ipcRenderer.invoke(Actions.Click, '[data-test="login-button"]')
+
+
+      }}>Sause Demo</Button>
+
       {/* <Dashboard/> */}
     </>
   )

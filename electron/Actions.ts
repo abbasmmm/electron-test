@@ -1,4 +1,6 @@
 export enum Actions{
     SendMessage = "SendMessage",
-    LaunchBrowser = "LaunchBrowser"
+    LaunchBrowser = "LaunchBrowser",
+    Fill = "Fill",
+    Click = "Click"
 }

@@ -1,23 +1,26 @@
 import { ipcMain } from "electron"
 import { Actions } from "./Actions";
-// import { LaunchBrowser } from "./PlaywrightUtils";
+import { Fill, GoTo,Click, LaunchBrowser } from "./PlaywrightUtils";
 
-// const handlers = new Map<string,any> ();
-// handlers.set(Actions.LaunchBrowser, LaunchBrowser);
+const handlers = new Map<string, any>([
+    [Actions.LaunchBrowser, GoTo],
+    [Actions.Fill, Fill],
+    [Actions.Click, Click]
 
-export const setupIPC= ()=>{
-    
+]);
+
+export const setupIPC = () => {
+
     ipcMain.on(Actions.SendMessage, (event, data) => {
         console.log('From MAIN', data);
     })
 
-    ipcMain.handle(Actions.SendMessage, (e, args)=>{
+    ipcMain.handle(Actions.SendMessage, (e, args) => {
         console.log(e, args);
         return "Message returned from main process";
-    })    
+    })
 
-    ipcMain.handle(Actions.LaunchBrowser, async (event, args) => {
-        const { LaunchBrowser } = await import('./PlaywrightUtils.js');
-        return await LaunchBrowser();
+    handlers.forEach((handler, eventName: string) => {
+        ipcMain.handle(eventName, async (e, ...data) => handler(...data));
     });
 }
