@@ -1,25 +1,30 @@
 import { ipcMain } from "electron"
-import { Actions } from "./Actions";
-import { Fill, GoTo,Click, LaunchBrowser } from "./PlaywrightUtils";
+import { EsActions, PwActions, StorageActions } from "./Actions";
+import { Fill, GoTo, Click, LaunchBrowser, Test } from "./pw/PlaywrightUtils";
+import os from 'os'
+import { GetUserName } from "./MiscUtils";
+import { getConfig, getLocators, setConfig, setLocators } from "./storage/ElectronStorage";
+import { SelectFolder } from "./storage/FileUtils";
+import { ExecuteMethod, LoadScript } from "./scripts/ScriptLoader";
 
 const handlers = new Map<string, any>([
-    [Actions.LaunchBrowser, GoTo],
-    [Actions.Fill, Fill],
-    [Actions.Click, Click]
+    [PwActions.LaunchBrowser, GoTo],
+    [PwActions.Fill, Fill],
+    [PwActions.Click, Click],
+    [PwActions.Test, Test],
 
+    [StorageActions.GetUserName, GetUserName],
+    [StorageActions.GetLocators, getLocators],
+    [StorageActions.SetLocators, setLocators],
+    [StorageActions.GetConfig, getConfig],
+    [StorageActions.SetConfig, setConfig],
+    [StorageActions.SelectFolder, SelectFolder],
+
+    [EsActions.LoadScript, LoadScript],
+    [EsActions.ExecuteMethod, ExecuteMethod]
 ]);
 
 export const setupIPC = () => {
-
-    ipcMain.on(Actions.SendMessage, (event, data) => {
-        console.log('From MAIN', data);
-    })
-
-    ipcMain.handle(Actions.SendMessage, (e, args) => {
-        console.log(e, args);
-        return "Message returned from main process";
-    })
-
     handlers.forEach((handler, eventName: string) => {
         ipcMain.handle(eventName, async (e, ...data) => handler(...data));
     });

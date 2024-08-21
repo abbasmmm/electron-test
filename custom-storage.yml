@@ -1,0 +1,30 @@
+Locators:
+  ComponentLocators:
+    - ComponentName: Login Page
+      Locators:
+        - id: 9d41685d-f126-524b-b9fd-736f3534f391
+          name: user name textbox
+          locator: '#user-name'
+        - id: 5990f866-d749-5b4a-8d4b-e9cf08d5834c
+          name: password textbox
+          locator: '#password'
+        - id: 46a1dd65-3e31-5ea1-ac14-13c9f6223a2c
+          name: login button
+          locator: '#login-button'
+      ComponentLocator: ''
+    - ComponentName: Products Page
+      Locators:
+        - id: 5f3690a5-da2b-501e-b76c-91b5fac307ae
+          name: add to card button
+          locator: '#add-to-cart-sauce-labs-backpack'
+        - id: 0b2d4958-67df-5879-8aaa-cc41c165f0b1
+          name: card button
+          locator: '[data-test="shopping-cart-link"]'
+    - ComponentName: Cart Page
+      Locators:
+        - id: 1450077f-b1d3-5720-9e78-82b890c51312
+          name: item quantity textbox
+          locator: '[data-test="item-quantity"]'
+        - id: de4032f2-fc44-599b-bd6e-37ba971c4487
+          name: capture button
+          locator: '#checkout'
