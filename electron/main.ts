@@ -3,10 +3,13 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import express from 'express'
 import cors from 'cors'
+import fs from 'fs';
 
+import { ConfigKeys, PwActions } from './shared/Actions'
+import { getConfig, loadCustomStorage } from './storage/ElectronStorage'
 import { setupIPC } from './ipcHandlers'
-import { PwActions } from './Actions'
-import { loadCustomStorage } from './storage/ElectronStorage'
+import { setupExpress } from './ExpressSetup'
+import { setupGherkinUtils } from './GherkinUtils'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')
@@ -19,34 +22,10 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 
 export let mainWindow: BrowserWindow | null
 
-// Create an Express server
-const appExpress = express()
-appExpress.use(cors())
-appExpress.use(express.json());
-
-const port = 12215;
-
-// Define a route for the root URL
-appExpress.get('/', (req, res) => {
-  res.send('Hello from Express!')
-})
-
-appExpress.post('/element-clicked', (req, res) => {
-  const { selector } = req.body;
-  mainWindow.webContents.send(PwActions.LocatorSelected, selector);
-
-  console.log('Element selected:', selector)
-  res.status(200).send('Selection received')
-})
-
-
-// Start the Express server
-appExpress.listen(port, () => {
-  console.log(`Express server is running on http://localhost:${port}`)
-})
-
 function createWindow() {
   setupIPC()
+  setupExpress();
+  setupGherkinUtils();
   loadCustomStorage(app.getAppPath())
   // Open a DevTools session for the main process
   // electronDebug({ showDevTools: true })
@@ -55,7 +34,6 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
-
   })
 
   mainWindow.maximize();

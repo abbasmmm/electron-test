@@ -1,11 +1,11 @@
 import path from 'path';
-import { ConfigKeys } from '../Actions';
+import { ConfigKeys } from '../shared/Actions';
 import { getConfig } from '../storage/ElectronStorage';
 
 let customMethods;
 let methodNames;
 export const LoadScript = () => {
-    const filePath = path.join(getConfig(ConfigKeys.repoPath) as string, 'dist/custom-methods/index.js');
+    const filePath = path.join(getConfig(ConfigKeys.repoPath) as string, 'dist/index.js');
 
     try {
         customMethods = require(filePath); // Use require to load the module
@@ -25,7 +25,7 @@ export const ExecuteMethod = async (methodName: string, ...args: any[]) => {
     if (methodNames.includes(methodName)) {
         try {
             const result = await customMethods[methodName](...args);
-            console.log('Result:', result);
+            // console.log('Result:', result);
         } catch (error) {
             console.error('Error executing method:', error);
         }

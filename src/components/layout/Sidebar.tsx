@@ -10,6 +10,7 @@ import {
   History,
   PrecisionManufacturing,
   LocationSearching,
+  Terminal,
 } from "@mui/icons-material";
 import {
   Box,
@@ -42,6 +43,7 @@ const Sidebar = ({ mode, setMode, collapsed, setCollapsed, width }) => {
             { text: "Manage Tests", icon: <PrecisionManufacturing />, path: "/manage-tests" },
             { text: "Locator Repository", icon: <LocationSearching />, path: "/locator-repository" },
             { text: "Test Results", icon: <History />, path: "/test-results" },
+            { text: "Terminal", icon: <Terminal />, path: "/terminal" },
             {
               text: mode === "light" ? 'Dark Mode' : 'Light Mode',
               icon: mode === "light" ? <ModeNight /> : <LightMode />,

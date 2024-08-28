@@ -1,4 +1,4 @@
-export enum PwActions{
+export enum PwActions {
     LaunchBrowser = "LaunchBrowser",
     Fill = "Fill",
     Click = "Click",
@@ -6,7 +6,7 @@ export enum PwActions{
     Test = "Test",
 }
 
-export enum StorageActions{
+export enum StorageActions {
     GetLocators = "GetLocators",
     GetUserName = "GetUserName",
     SetLocators = "SetLocators",
@@ -23,4 +23,13 @@ export enum EsActions {
 export enum ConfigKeys {
     url = 'url',
     repoPath = 'repoPath'
+}
+
+export enum TestResultActions {
+    GetResultsList = 'GetResultsList',
+    GetReports = "GetReports"
+}
+
+export enum GherkinActions {
+    GetFeatures = 'GetFeatures'
 }

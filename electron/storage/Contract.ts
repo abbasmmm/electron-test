@@ -14,6 +14,7 @@ export interface LocatorModel {
 }
 
 export interface ComponentLocatorsModel {
+    Url?: string;
     ComponentName: string;
     ComponentLocator?:string;
     Locators: LocatorModel[];

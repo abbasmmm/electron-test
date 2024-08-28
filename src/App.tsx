@@ -5,9 +5,12 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RouterBreadcrumbs from "./components/layout/RouterBreadcrumbs";
 import { ManageTests } from "./components/ManageTests";
-import { Home } from "@mui/icons-material";
+import { Home, Terminal } from "@mui/icons-material";
 import { HomeComponent } from "./components/Home";
-import { LocatorRepository } from "./components/LocatorRepository";
+import { LocatorRepository } from "./components/locators/LocatorRepository";
+import TerminalComponent from "./components/terminal/Terminal";
+import { TestResults } from "./components/TestResults";
+import Features from "./components/features/Features";
 
 
 function App() {
@@ -18,9 +21,9 @@ function App() {
     {
       palette: {
         mode: mode as any,
-        primary: {
-          main: '#b31e30',
-        },
+        // primary: {
+        //   main: '#b31e30',
+        // },
       },
     }
   );
@@ -65,14 +68,15 @@ function App() {
                   <RouterBreadcrumbs />
                 </Box>
                 <Box sx={{
-                  flex: 1, boxSizing: 'border-box', p: 1,  overflow: 'auto'
+                  flex: 1, boxSizing: 'border-box', p: 1, overflow: 'auto'
                 }}>
                   <Routes>
                     <Route path="/" element={<HomeComponent />} />
-                    <Route path="/features" element={<div >features</div>} />
+                    <Route path="/features" element={<Features />} />
                     <Route path="/manage-tests" element={<ManageTests />} />
-                    <Route path="/test-results" element={<div >test-results</div>} />
+                    <Route path="/test-results" element={<TestResults />} />
                     <Route path="/locator-repository" element={<LocatorRepository />} />
+                    <Route path="/terminal" element={<TerminalComponent />} />
                   </Routes>
                 </Box>
               </Box>

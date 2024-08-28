@@ -1,5 +1,5 @@
 import { Box, Button, Divider, IconButton, InputAdornment, InputBase, OutlinedInput, Paper, TextField } from "@mui/material"
-import { ConfigKeys, EsActions, PwActions, StorageActions } from "../../electron/Actions"
+import { ConfigKeys, EsActions, PwActions, StorageActions } from "../../electron/shared/Actions"
 import { GridSearchIcon } from "@mui/x-data-grid"
 import { BrowseGallery, Directions, Folder, Search } from "@mui/icons-material"
 import { useEffect, useState } from "react"

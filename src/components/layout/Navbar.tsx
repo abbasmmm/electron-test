@@ -1,8 +1,7 @@
-import { Mail, Notifications, Pets } from "@mui/icons-material";
+import { Pets } from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
-  Badge,
   Box,
   Menu,
   MenuItem,
@@ -12,7 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { PwActions, StorageActions } from "../../../electron/Actions";
+import { StorageActions } from "../../../electron/shared/Actions";
+import logo from '../../assets/wf_logo.webp';
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -46,9 +46,18 @@ const Navbar = () => {
   }
 
   return (
-    <AppBar position="sticky">
+<AppBar
+      sx={{
+        position: 'sticky', // Correct positioning
+        zIndex: theme => theme.zIndex.appBar // Ensure it's above other elements if needed
+      }}
+    >      {/* <img src={logo} style={{
+        position: "absolute", top: 20, left: 20, aspectRatio: '220 / 23',
+        height: '23px',
+        width: '220px'
+      }} /> */}
       <StyledToolbar>
-        <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
+        <Typography variant="h5" sx={{ display: { xs: "none", sm: "block" } }}>
           TEST PILOT
         </Typography>
         <Pets sx={{ display: { xs: "block", sm: "none" } }} />

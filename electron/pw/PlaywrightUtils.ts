@@ -1,6 +1,5 @@
 import { chromium, Browser, Page, BrowserContext } from 'playwright';
 import { ExecuteMethod, LoadScript } from '../scripts/ScriptLoader';
-import path from 'path';
 import fs from 'fs';
 
 let page: Page;
@@ -77,13 +76,14 @@ export const PrintAllSelectors = async () => {
   console.log(selectors);
 }
 
+
 export const AddEventHandlers = async () => {
   try {
     console.log('AddEventHandlers called');
 
     // Read the script content
     const scriptContent = fs.readFileSync('C:/Users/Abbas/source/repos/electron-test/electron/pw/script-inject.js', 'utf-8');
-    console.log('Script content loaded:', scriptContent);
+    //console.log('Script content loaded:', scriptContent);
 
     // Inject the script into the page
     await page.evaluate((content) => {
@@ -108,7 +108,7 @@ export const Click = async (locator: string) => {
 
 export const Test = async () => {
   await LaunchBrowser();
-  await LoadScript();
+  console.log(await LoadScript());
   await ExecuteMethod('GOTO', page, 'https://mui.com/');
   await ExecuteMethod('GOTO', page, 'https://chatgpt.com/')
 }

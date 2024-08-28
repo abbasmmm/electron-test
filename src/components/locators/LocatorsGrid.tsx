@@ -15,24 +15,19 @@ import {
 import {
     randomId,
 } from '@mui/x-data-grid-generator';
-import { ComponentLocatorsModel } from '../../electron/storage/Contract';
+import { ComponentLocatorsModel } from '../../../electron/storage/Contract';
 import { FormControlLabel, Switch } from '@mui/material';
-import { PwActions } from '../../electron/Actions';
-import { DebuggerComponent } from './Debugger';
-
+import { PwActions } from '../../../electron/shared/Actions';
 
 function EditToolbar(props: any) {
-    const [checked, setChecked] = React.useState(false);
     return (
         <GridToolbarContainer>
-
             <Button color="primary" startIcon={<AddIcon />} onClick={props.handleAddClick}>
                 Add New Locator
             </Button>
             <FormControlLabel
-                control={<Switch checked={checked} color="primary" onChange={e => {
-                    setChecked(e.target.checked);
-                    props.capture(e.target.checked);
+                control={<Switch checked={props.receiveEvents} color="primary" onChange={e => {
+                    props.setReceiveEvents(e.target.checked);
                 }} />}
                 label="Start Capturing The Locators From Page"
                 labelPlacement="start"
@@ -43,14 +38,34 @@ function EditToolbar(props: any) {
 
 interface ComponentLocatorsProps {
     componentLocators: ComponentLocatorsModel;
+    expanded: boolean
 }
-export const LocatorsGrid: React.FC<ComponentLocatorsProps> = ({ componentLocators }) => {
+export const LocatorsGrid: React.FC<ComponentLocatorsProps> = ({ componentLocators, expanded }) => {
     const [, setComponentLocators] = React.useState(componentLocators);
+    const [receiveEvents, setReceiveEvents] = React.useState(false);
+
+
+    React.useEffect(() => {
+        if (!expanded) {
+            setReceiveEvents(false)
+        }
+    }, [expanded]);
+
+    React.useEffect(() => {
+        if (receiveEvents) {
+            window.ipcRenderer.removeAllListeners(PwActions.LocatorSelected);
+            window.ipcRenderer.on(PwActions.LocatorSelected, captureSelectors);  // Add new listener
+        } else {
+            window.ipcRenderer.removeAllListeners(PwActions.LocatorSelected);
+        }
+    }, [receiveEvents]);
 
     const handleDeleteClick = (id: GridRowId) => () => {
         componentLocators.Locators = componentLocators.Locators.filter(locator => locator.id !== id);
         setComponentLocators({ ...componentLocators });
     };
+
+
 
     const processRowUpdate = (newRow: GridRowModel) => {
         try {
@@ -64,7 +79,7 @@ export const LocatorsGrid: React.FC<ComponentLocatorsProps> = ({ componentLocato
         return newRow;
     };
 
-    const handleAddRow = (locator ='') => {
+    const handleAddRow = (locator = '') => {
         componentLocators.Locators.push({
             id: randomId(),
             name: '',
@@ -72,7 +87,6 @@ export const LocatorsGrid: React.FC<ComponentLocatorsProps> = ({ componentLocato
         });
         setComponentLocators({ ...componentLocators });
     };
-
 
     const columns: GridColDef[] = [
         // { field: 'id', headerName: 'id', flex: 1 },
@@ -110,16 +124,7 @@ export const LocatorsGrid: React.FC<ComponentLocatorsProps> = ({ componentLocato
 
     const captureSelectors = React.useCallback((event, selector) => {
         handleAddRow(selector)
-    }, []); 
-
-    const receiveSelectors = React.useCallback((shouldCapture) => {
-        if (shouldCapture) {
-            window.ipcRenderer.removeAllListeners(PwActions.LocatorSelected);
-            window.ipcRenderer.on(PwActions.LocatorSelected, captureSelectors);  // Add new listener
-        } else {
-            window.ipcRenderer.removeAllListeners(PwActions.LocatorSelected);
-        }
-    }, [captureSelectors]);
+    }, []);
 
     return (
         <Box
@@ -144,7 +149,7 @@ export const LocatorsGrid: React.FC<ComponentLocatorsProps> = ({ componentLocato
                     toolbar: EditToolbar as GridSlots['toolbar'],
                 }}
                 slotProps={{
-                    toolbar: { handleAddClick: handleAddRow, capture: receiveSelectors },
+                    toolbar: { handleAddClick: handleAddRow, receiveEvents: receiveEvents, setReceiveEvents: setReceiveEvents },
                 }}
 
                 hideFooter={true}

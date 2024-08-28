@@ -1,6 +1,6 @@
 import { IconButton, InputBase, Paper } from "@mui/material";
 import { GridSearchIcon } from "@mui/x-data-grid";
-import { ConfigKeys, PwActions, StorageActions } from "../../electron/Actions";
+import { ConfigKeys, PwActions, StorageActions } from "../../electron/shared/Actions";
 import { useEffect, useState } from "react";
 
 

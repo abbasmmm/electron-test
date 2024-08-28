@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { PwActions } from '../../electron/Actions';
+import { PwActions } from '../../electron/shared/Actions';
 
 export const DebuggerComponent = () => {
     const captureSelectors = useCallback((event, selector) => {

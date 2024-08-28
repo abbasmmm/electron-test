@@ -1,5 +1,5 @@
 import { Button, Divider, IconButton, InputBase, Paper, TextField } from "@mui/material"
-import { PwActions } from "../../electron/Actions"
+import { PwActions } from "../../electron/shared/Actions"
 import { GridMenuIcon, GridSearchIcon } from "@mui/x-data-grid"
 import { useState } from "react"
 import { LaunchBrowser } from "./LaunchBrowser"

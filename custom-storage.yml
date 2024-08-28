@@ -12,6 +12,7 @@ Locators:
           name: login button
           locator: '#login-button'
       ComponentLocator: ''
+      Url: https://www.saucedemo.com
     - ComponentName: Products Page
       Locators:
         - id: 5f3690a5-da2b-501e-b76c-91b5fac307ae
@@ -20,6 +21,7 @@ Locators:
         - id: 0b2d4958-67df-5879-8aaa-cc41c165f0b1
           name: card button
           locator: '[data-test="shopping-cart-link"]'
+      ComponentLocator: //*[@data-test="title" and text()="Products"]
     - ComponentName: Cart Page
       Locators:
         - id: 1450077f-b1d3-5720-9e78-82b890c51312

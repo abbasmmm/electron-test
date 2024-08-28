@@ -1,15 +1,15 @@
 import { ComponentLocators } from "./ComponentLocators";
-import { StorageActions } from "../../electron/Actions";
+import { StorageActions } from "../../../electron/shared/Actions";
 import { useEffect, useState, useRef } from "react";
 import { Box, Button, Fab, Tooltip } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import { LocatorRepositoryModal } from "../../electron/storage/Contract";
-import { LaunchBrowser } from "./LaunchBrowser";
+import { LocatorRepositoryModal } from "../../../electron/storage/Contract";
+import { LaunchBrowser } from "../LaunchBrowser";
 
 export const LocatorRepository = () => {
     const [locators, setLocators] = useState<LocatorRepositoryModal | undefined>(undefined);
     const locatorsRef = useRef<LocatorRepositoryModal | undefined>(undefined);
-
+    const [expandedIndex, setExpandedIndex] = useState(-1);
     useEffect(() => {
         // Fetch initial locators and set up interval
         (async () => {
@@ -42,7 +42,7 @@ export const LocatorRepository = () => {
                 m={0}
                 gap={2}
             >
-                <LaunchBrowser/>
+                <LaunchBrowser />
                 <Button
                     color="primary"
                     variant="contained"
@@ -52,7 +52,7 @@ export const LocatorRepository = () => {
                             const updatedLocators = {
                                 ...locators,
                                 ComponentLocators: [
-                                    ...locators.ComponentLocators,
+                                    ...locators.ComponentLocators,                                    
                                     { ComponentName: 'Provide a name to the page/component', Locators: [] }
                                 ]
                             };
@@ -66,7 +66,9 @@ export const LocatorRepository = () => {
             </Box>
 
             {locators?.ComponentLocators.map((componentLocators, index) => (
-                <ComponentLocators key={componentLocators.ComponentName} componentLocators={componentLocators} />
+                <ComponentLocators key={componentLocators.ComponentName} onExpanded={(expand) => {
+                    setExpandedIndex(expand ? index : -1);
+                }} componentLocators={componentLocators} expand={expandedIndex === index} />
             ))}
         </>
     );

@@ -25,7 +25,8 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/features': 'Features',
   '/manage-tests': 'Manage Tests',
   '/test-results': 'Test Results',
-  '/locator-repository': 'Locator Repository'
+  '/locator-repository': 'Locator Repository',
+  '/terminal': 'Terminal'
 };
 
 function ListItemLink(props: ListItemLinkProps) {

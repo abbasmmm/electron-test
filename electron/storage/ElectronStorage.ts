@@ -5,14 +5,15 @@ import yaml from 'js-yaml'
 import path from 'path';
 import fs from 'fs'
 import { CustomStorage, LocatorRepositoryModal } from './Contract';
+import { ConfigKeys } from '../shared/Actions';
 const store = new Store();
 
-export const getConfig = (key) => {
+export const getConfig = (key: ConfigKeys) => {
     console.log('config key read :', key)
     return store.get(key)
 }
 
-export const setConfig = (key, value) => {
+export const setConfig = (key: ConfigKeys, value) => {
     console.log('config key set :', key, value)
     store.set(key, value)
 }
@@ -21,7 +22,8 @@ let storagePath;
 let customStorage: CustomStorage = {} as any; // Initialize customStorage with an empty object
 
 export const loadCustomStorage = (appPath) => {
-    storagePath = path.join(appPath, 'custom-storage.yml');
+    const repoPath = getConfig(ConfigKeys.repoPath) as any
+    storagePath = path.join(repoPath, 'test-setup.yml');
     console.log(storagePath);
     // Check if the custom-storage.yml file exists
     if (!fs.existsSync(storagePath)) {
